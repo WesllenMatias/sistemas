@@ -20,17 +20,43 @@
 #do
 #    echo $line
 #done < /dir/arq.log | pv -n | dialog --gauge "Lendo log..." 10 70 0
+# ------------------------------TESTES------------------------------------------ #
 [ ! -x $(which sshpass) ] && apt install sshpass -y > /dev/null
 [ ! -x $(which nmap) ] && apt install nmap -y > /dev/null
+[ ! -x $(which dialog) ] && apt install dialog -y > /dev/null
 
 #-------------------------- FUNCOES ----------------------------------------- #
 
 function speed () {
-  speedtest=$(speedtest-cli)
-  dialog \
+#  speedtest=$(speedtest-cli)
+#  dialog \
+#  --stdout \
+#  --title "-= Teste de Velocidade da Interne =-" \
+#  --msgbox "$speedtest" 0 0
+counter=0
+(
+# set infinite while loop
+while :
+do
+speedtest=$(speedtest-cli > speed.txt)
+cat <<EOF
+XXX
+$counter
+$speedtest ( $counter%):
+XXX
+EOF
+# increase counter by 10
+(( counter+=10 ))
+[ $counter -eq 100 ] && break
+# delay it a specified amount of time i.e 1 sec
+sleep 1
+done
+) |
+dialog --title "Testando Velocidade" --gauge "Aguarde..." 7 70 0 && \
+dialog \
   --stdout \
   --title "-= Teste de Velocidade da Interne =-" \
-  --msgbox "$speedtest" 0 0
+  --msgbox "$(cat speed.txt)" 0 0
 }
 function TamDisco() {
   disco=$(df -h | head -n 1 && df -h | grep sd)
@@ -82,6 +108,21 @@ function CMDremoto() {
       --stdout \
       --msgbox "$cmdext" 0 0
 }
+function atualizar() {
+  origem=$(dialog \
+  --title "Arquivo a ser Copiado:" \
+  --stdout \
+  --fselect / 0 0)
+  destino=$(dialog \
+  --title "Destino da Cópia:" \
+  --stdout \
+  --fselect / 0 0)
+  copia=$(cp $origem $destino)
+  dialog \
+  --title " Para onde vai ser Copiado " \
+  --stdout \
+  --msgbox "$(echo $copia)" 0 0
+}
 
 #-------------------------- MENU ------------------------------------------------------ #
 while true;
@@ -92,6 +133,7 @@ while true;
         3 "Ping uma Estação"                    \
         4 "Scanner Nmap"                        \
         5 "Comando Remoto"                      \
+        6 "Atualizar"                           \
         0 "Sair"                                )
 
         [ $? -ne 0 ] && "Cancelou ou Apertou ESC." && break
@@ -102,6 +144,7 @@ while true;
                   3) PingMaquina;;
                   4) NmapScan;;
                   5) CMDremoto;;
+                  6) atualizar;;
                   0) exit;;
           esac
 done
