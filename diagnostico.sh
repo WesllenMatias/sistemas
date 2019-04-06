@@ -81,7 +81,6 @@ function CMDremoto() {
       --title "Retorno do Comando" \
       --stdout \
       --msgbox "$cmdext" 0 0
-
 }
 
 #-------------------------- MENU ------------------------------------------------------ #
