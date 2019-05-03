@@ -21,9 +21,9 @@
 #    echo $line
 #done < /dir/arq.log | pv -n | dialog --gauge "Lendo log..." 10 70 0
 # ------------------------------TESTES------------------------------------------ #
-[ ! -x $(which sshpass) ] && apt install sshpass -y > /dev/null
-[ ! -x $(which nmap) ] && apt install nmap -y > /dev/null
-[ ! -x $(which dialog) ] && apt install dialog -y > /dev/null
+[ ! -x $(which sshpass) ] && sudo apt install sshpass -y > /dev/null
+[ ! -x $(which nmap) ] && sudo apt install nmap -y > /dev/null
+[ ! -x $(which dialog) ] && sudo apt install dialog -y > /dev/null
 
 #-------------------------- FUNCOES ----------------------------------------- #
 
@@ -123,6 +123,20 @@ function atualizar() {
   --stdout \
   --msgbox "$(echo $copia)" 0 0
 }
+function temperatura() {
+  rasp1=192.168.11.90
+  pwd=valessh
+  temp='vcgencmd measure_temp'
+  volt='vcgencmd measure_volts'
+  usuario=pi
+  ssh=/usr/bin/ssh
+  cmdrasp=$(sshpass -p $pwd $ssh $usuario@$rasp1 $temp)
+  dialog \
+  --title "-=Temperatura das Rapsberrys=-" \
+  --stdout \
+  --msgbox "$(echo "Temperaturas:
+  $cmdrasp")" 0 0
+}
 
 #-------------------------- MENU ------------------------------------------------------ #
 while true;
@@ -134,6 +148,7 @@ while true;
         4 "Scanner Nmap"                        \
         5 "Comando Remoto"                      \
         6 "Atualizar"                           \
+        7 "Temperatura das Raspberrys"          \
         0 "Sair"                                )
 
         [ $? -ne 0 ] && "Cancelou ou Apertou ESC." && break
@@ -145,6 +160,7 @@ while true;
                   4) NmapScan;;
                   5) CMDremoto;;
                   6) atualizar;;
+                  7) temperatura;;
                   0) exit;;
           esac
 done
