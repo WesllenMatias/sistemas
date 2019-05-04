@@ -47,7 +47,7 @@ function Entrada() {
   --center \
   --form \
   --field="Marca":CB DELL\!HP\!MIRANDA \
-  --field="Modelo":CB DESKTOP\!NOTEBOOK\!RASPBERRY  \
+  --field="Modelo":CB DESKTOP\!NOTEBOOK\!RASPBERRY \
   --field="Descrição do Equipamento:" \
   --field="Data de entrada:":DT \
   --field="N/S:" \
