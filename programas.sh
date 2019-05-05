@@ -17,4 +17,11 @@ sudo apt install tmux -y && \
 sudo apt install screenfetch -y && \
 sudo apt install atom -y && \
 sudo apt install git -y && \
-sudo apt install gimp -y
+sudo apt install gimp -y && \
+cd ~/Downloads/ && \
+wget https://go.skype.com/skypeforlinux-64.deb && \
+sudo dpkg -i skypeforlinux-64.deb && \
+sudo apt install -f -y && \
+sudo apt install gitkraken -y && \
+sudo aopt install youtube-dl -y && \
+sudo apt install kodi
