@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
+<<<<<<< Updated upstream
 # crud.sh - Ferramenta para controle de inventário
 #
 # crud.sh - cadastro, listagem, update e delete.
 #
 # Site:       https://wesllen.com.br
+=======
+# crud.sh - cadastro, listagem, update e delete.
+#
+# Site:       https://wesllenmatias.com.br
+>>>>>>> Stashed changes
 # Autor:      Wesllen Matias
 # Manutenção: Wesllen Matias
 #
 # ------------------------------------------------------------------------ #
+<<<<<<< Updated upstream
 # Uma ferramenta para controle de inventário.
 # Programa para cadastar e administrar inventário#
+=======
+# Programa para cadastar e administrar inventário
+#
+>>>>>>> Stashed changes
 # ------------------------------------------------------------------------ #
 # Histórico:
 #
@@ -20,6 +31,7 @@
 #   bash 4.4.19
 # ------------------------------------------------------------------------ #
 
+<<<<<<< Updated upstream
 function Cad_Marca() {
   yad --title "Cadastro de Marca" \
   --width=400 \
@@ -64,3 +76,11 @@ yad --title "Inventário" \
 --button="Cadastro de Marca":"bash -c Cad_Marca" \
 --button="Cadastro de Modelo":"bash -c Cadastro_Modelo" \
 --button="Cadastrar Entrada":"bash -c Entrada" 0 0 0
+=======
+while true; do
+  yad --title "Selecione uma opção:" \
+  --form \
+  --field="Opções::"CB "Cad.Modelo!Cad.Marca!Cad.tipo!Cad.Item" \
+  --rtl
+done
+>>>>>>> Stashed changes
