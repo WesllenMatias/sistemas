@@ -46,50 +46,88 @@ contador=1.3.6.1.2.1.43.10.2.1.4
 
 function printname() {
 
-resultado="$( \
-
-        echo -e "===========LOJA 01\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printti $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printti $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')\n" && \
-        echo -e "===========LOJA 02\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2conf $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2recep $contador | awk '{ print $4 }')\n" && \
-        echo -e "===========LOJA 03\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3recep $contador | awk '{ print $4 }')\n" && \
-        echo -e "===========LOJA 06\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6conf $contador | awk '{ print $4 }')\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')\n" && \
-        echo -e "===========LOJA 07\n" && \
-        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')"
-)"
+l1printti="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printti $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printti $contador | awk '{ print $4 }')" \
+        )"
+l1printadm="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')" \
+        )"
+l1printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')" \
+        )"
+l1printcred="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')" \
+        )"
+l1printdepo="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')" \
+        )"
+l2printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2conf $contador | awk '{ print $4 }')" \
+        )"
+l2printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2recep $contador | awk '{ print $4 }')" \
+        )"
+l3printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3recep $contador | awk '{ print $4 }')\n" \
+        )"
+l6printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6conf $contador | awk '{ print $4 }')\n" \
+        )"
+l6printdepo="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')" \
+        )"
+l7printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')" \
+        )"
 
 dialog --title "Captura de Contadores" \
-       --msgbox "$(echo -e $resultado)" 100 30
+       --msgbox "$(echo -e "
+==========LOJA 01=============
+$l1printti
+==============================
+$l1printadm
+==============================
+$l1printcred
+==============================
+$l1printdepo
+==============================
+$l1printrecep
+=========LOJA 02==============
+$l2printconf
+==============================
+$l2printrecep
+=========LOJA 03==============
+$l3printrecep
+=========LOJA 06==============
+$l6printconf
+==============================
+$l6printdepo
+=========LOJA 07==============
+$l7printconf
+==============================
+       ")" 100 40
 }
 function contadorestelegram() {
   CURL="/usr/bin/curl"
@@ -142,54 +180,94 @@ GET "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${USER}&text=$
 }
 function contadoresemail() {
 
-  corpoemail="$( \
+l1printti="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printti $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printti $contador | awk '{ print $4 }')" \
+        )"
+l1printadm="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')" \
+        )"
+l1printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')" \
+        )"
+l1printcred="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')" \
+        )"
+l1printdepo="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')" \
+        )"
+l2printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2conf $contador | awk '{ print $4 }')" \
+        )"
+l2printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2recep $contador | awk '{ print $4 }')" \
+        )"
+l3printrecep="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3recep $contador | awk '{ print $4 }')\n" \
+        )"
+l6printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6conf $contador | awk '{ print $4 }')\n" \
+        )"
+l6printdepo="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')" \
+        )"
+l7printconf="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')" \
+        )"
 
-          echo -e "===========LOJA 01=========\n" && \
-          echo -e "<p>Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")<\p>\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printti $serial | awk '{ print $4 }'| tr " \" " " ")\n\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printti $contador | awk '{ print $4 }')\n\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')\n" && \
-          echo -e "===========LOJA 02\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2conf $contador | awk '{ print $4 }')\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2recep $contador | awk '{ print $4 }')\n" && \
-          echo -e "===========LOJA 03\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3recep $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3recep $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3recep $contador | awk '{ print $4 }')\n" && \
-          echo -e "===========LOJA 06\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6conf $contador | awk '{ print $4 }')\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')\n" && \
-          echo -e "===========LOJA 07\n" && \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")\n" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')"
-  )"
+corpoemail="$(echo -e "
+==========LOJA 01=============
+$l1printti
+==============================
+$l1printadm
+==============================
+$l1printcred
+==============================
+$l1printdepo
+==============================
+$l1printrecep
+=========LOJA 02==============
+$l2printconf
+==============================
+$l2printrecep
+=========LOJA 03==============
+$l3printrecep
+=========LOJA 06==============
+$l6printconf
+==============================
+$l6printdepo
+=========LOJA 07==============
+$l7printconf
+==============================
+       ")"
   emaildestino=$(
   dialog \
   --title "E-mail Destino" \
   --stdout \
   --inputbox "Digite e-mail de Destino:" 0 0)
 
-  echo -e $corpoemail | mailx -s "Contadores das Impressoras" $emaildestino
+  echo -e $corpoemail | mailx -s "Contadores das Impressoras" "$emaildestino"
 
 }
 
@@ -211,4 +289,4 @@ while true;
                   3) contadoresemail;;
                   0) exit;;
           esac
-    done
+  done
