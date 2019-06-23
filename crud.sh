@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
+<<<<<<< Updated upstream
 # crud.sh - Ferramenta para controle de inventário
 #
 # crud.sh - cadastro, listagem, update e delete.
 #
+# Site:       https://wesllen.com.br
+=======
+# crud.sh - cadastro, listagem, update e delete.
+#
 # Site:       https://wesllenmatias.com.br
+>>>>>>> Stashed changes
 # Autor:      Wesllen Matias
 # Manutenção: Wesllen Matias
 #
 # ------------------------------------------------------------------------ #
+<<<<<<< Updated upstream
 # Uma ferramenta para controle de inventário.
 # Programa para cadastar e administrar inventário#
+=======
+# Programa para cadastar e administrar inventário
+#
+>>>>>>> Stashed changes
 # ------------------------------------------------------------------------ #
 # Histórico:
 #
