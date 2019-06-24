@@ -24,39 +24,41 @@
 [ ! -x $(which sshpass) ] && sudo apt install sshpass -y > /dev/null
 [ ! -x $(which nmap) ] && sudo apt install nmap -y > /dev/null
 [ ! -x $(which dialog) ] && sudo apt install dialog -y > /dev/null
+[ ! -x $(which speedtest-cli) ] && sudo apt install speedtest-cli -y > /dev/null
+
 
 #-------------------------- FUNCOES ----------------------------------------- #
 
 function speed () {
-#  speedtest=$(speedtest-cli)
-#  dialog \
+  speedtest-cli >> out |
+  dialog \
+  --stdout \
+  --title "-= Teste de Velocidade da Internet =-" \
+  --tailbox out 0 0
+#counter=0
+#(
+# set infinite while loop
+#while :
+#do
+#speedtest=$(speedtest-cli > speed.txt)
+#cat <<EOF
+#XXX
+#$counter
+#$speedtest ( $counter%):
+#XXX
+#OF
+# increase counter by 10
+#(( counter+=10 ))
+#[ $counter -eq 100 ] && break
+# delay it a specified amount of time i.e 1 sec
+#sleep 1
+#done
+#) |
+#dialog --title "Testando Velocidade" --gauge "Aguarde..." 7 70 0 && \
+#dialog \
 #  --stdout \
 #  --title "-= Teste de Velocidade da Interne =-" \
-#  --msgbox "$speedtest" 0 0
-counter=0
-(
-# set infinite while loop
-while :
-do
-speedtest=$(speedtest-cli > speed.txt)
-cat <<EOF
-XXX
-$counter
-$speedtest ( $counter%):
-XXX
-EOF
-# increase counter by 10
-(( counter+=10 ))
-[ $counter -eq 100 ] && break
-# delay it a specified amount of time i.e 1 sec
-sleep 1
-done
-) |
-dialog --title "Testando Velocidade" --gauge "Aguarde..." 7 70 0 && \
-dialog \
-  --stdout \
-  --title "-= Teste de Velocidade da Interne =-" \
-  --msgbox "$(cat speed.txt)" 0 0
+#  --msgbox "$(cat speed.txt)" 0 0
 }
 function TamDisco() {
   disco=$(df -h | head -n 1 && df -h | grep sd)
@@ -73,7 +75,6 @@ function PingMaquina() {
   --title " Resultado do Ping: " \
   --stdout \
   --msgbox "$resultado" 0 0
-}
 function NmapScan() {
   faixaip=$(dialog \
   --title "-= Nmap Scanner =-" \
@@ -85,28 +86,40 @@ function NmapScan() {
   --msgbox "$nresultado" 0 0
 }
 function CMDremoto() {
-  maquina=$(dialog \
-  --title "-=HOST=-" \
-  --stdout \
-  --inputbox "Informe o IP do Host:" 0 0)
-  usuario=$(dialog \
-  --title "-=Usuário=-" \
-  --stdout \
-  --inputbox "Informe o Usuário:" 0 0)
-  pwd=$(dialog \
-  --title "-=Confirmação=-" \
-  --stdout \
-  --passwordbox "Digite a Senha do SSH:" 0 0)
-  comando=$(dialog \
-  --title "-=Comando=-" \
-  --stdout \
-  --inputbox "Entre com o Comando:" 0 0)
-  conexao=/usr/bin/ssh
-  cmdext=$(sshpass -p $pwd $conexao $usuario@$maquina "$comando")
-      dialog \
-      --title "Retorno do Comando" \
-      --stdout \
-      --msgbox "$cmdext" 0 0
+form=$(dialog \
+--stdout \
+--form "Informe os dados de Conexao" \
+0 0 0 \
+"IP do Host:" 1 1 "" 1 20 20 20 \
+"Usuario do Host:" 2 1 "" 2 20 20 20 \
+"Senha:" 3 1 "" 3 20 20 20 \
+"Comando:" 4 1 "" 4 20 20 20
+)
+maquina=$($form | cut -d ' ' -f 1)
+usuario=$($form | cut -d ' ' -f 2)
+pwd=$($form | cut -d ' ' -f 3)
+comando=($form | cut -d ' ' -f 4)
+#  maquina=$(dialog \
+#  --title "-=HOST=-" \
+#  --stdout \
+#  --inputbox "Informe o IP do Host:" 0 0)
+#  usuario=$(dialog \
+#  --title "-=Usuário=-" \
+#  --stdout \
+#  --inputbox "Informe o Usuário:" 0 0)
+#  pwd=$(dialog \
+#  --title "-=Confirmação=-" \
+#  --stdout \
+#  --passwordbox "Digite a Senha do SSH:" 0 0)
+#  comando=$(dialog \
+#  --title "-=Comando=-" \
+#  --inputbox "Entre com o Comando:" 0 0)
+conexao=/usr/bin/ssh
+cmdext=$(sshpass -p $pwd $conexao $usuario@$maquina "$comando")
+dialog \
+--title "Retorno do Comando" \
+--stdout \
+--msgbox "$cmdext" 0 0 \
 }
 function atualizar() {
   origem=$(dialog \
