@@ -75,6 +75,7 @@ function PingMaquina() {
   --title " Resultado do Ping: " \
   --stdout \
   --msgbox "$resultado" 0 0
+}
 function NmapScan() {
   faixaip=$(dialog \
   --title "-= Nmap Scanner =-" \
@@ -154,7 +155,7 @@ function temperatura() {
 #-------------------------- MENU ------------------------------------------------------ #
 while true;
     do
-  menu=$(dialog --stdout --title "Menu Principal" --menu "Escolha uma opção:" 0 0 0 \
+  menu=$(dialog --stdout --title "Menu Principal" --backtitle "Sistema de Diagnosticos" --menu "Escolha uma opção:" 0 0 0 \
         1 "Testar Velocidade da Internet"       \
         2 "Verificar Espaço do Disco"           \
         3 "Ping uma Estação"                    \
