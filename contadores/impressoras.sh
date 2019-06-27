@@ -338,7 +338,14 @@ function contadoresemail() {
           echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')" \
           )"
 
-  corpoemail=$(echo -e "
+  corpoemail=$(
+
+  echo -e "
+  <html>
+    <head>
+
+    </head>
+      <body>
   ==========LOJA 01=============
   $l1printti
   ==============================
@@ -368,6 +375,9 @@ function contadoresemail() {
   =========LOJA 07==============
   $l7printconf
   ==============================
+        </body>
+  </html>
+
          ")
   emaildestino=$(
   dialog \
@@ -379,7 +389,80 @@ function contadoresemail() {
   echo -e $corpoemail | mailx -s "Contadores das Impressoras" "$emaildestino"
 
 }
+function contadoresemailbootstrap() {
 
+touch page.html
+
+echo -e "
+<!doctype html>
+<html lang='pt-br'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>
+
+    <title>Hello, world!</title>
+  </head>" > page.html
+echo "
+  <body>
+    <header>
+    <div class>
+      <nav class='navbar navbar-expand-lg navbar-dark bg-dark' style='height: 50px;'>
+
+      </nav>
+    </div>
+    </hea
+    der>" >> page.html
+echo -e "
+    <div class='container-fluid'>
+      <div>
+          <table class='table'>
+          <thead>
+            <tr>
+              <th scope='col'> Loja 01 </th>
+              <th scope='col'> Loja 02 </th>
+              <th scope='col'> Loja 03 </th>
+              <th scope='col'> Loja 06 </th>
+              <th scope='col'> Loja 07 </th>
+              <th scope='col'> MJ & VF </th>
+            </tr>
+          </thead>
+          <tbody>" >> page.html
+        echo -e "<tr>"
+        echo -e "<th scope='row'>1 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }' | tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "</tr>"
+        echo -e "<tr>"
+        echo -e "<th scope='row'>2 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")</td>" >> page.html
+        echo -e "</tr>"
+echo -e "
+          </tbody>
+          </table>
+        </div>
+      </div>
+            <p></p>" >> page.html
+echo -e "
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js' integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1' crossorigin='anonymous'></script>
+    <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js' integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM' crossorigin='anonymous'></script>
+  </body>
+</html>" >> page.html
+
+
+}
 #-------------------MENU---------------------------
 
 while true;
@@ -389,6 +472,7 @@ while true;
         1 "Capturar Contadores Mostrar em Tela"       \
         2 "Capturar Contadores Enviar Telegram"       \
         3 "Capturar Contadores Enviar via E-mail"     \
+        4 "Capturar Contadores Enviar via E-mail Bootstrap" \
         0 "Sair"                                )
 
         #[ $? -ne 0 ] && "Cancelou ou Apertou ESC." && break
@@ -397,6 +481,7 @@ while true;
                   1) printname;;
                   2) contadorestelegram;;
                   3) contadoresemail;;
+                  4) contadoresemailbootstrap;;
                   0) exit;;
           esac
   done

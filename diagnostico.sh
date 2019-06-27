@@ -30,11 +30,12 @@
 #-------------------------- FUNCOES ----------------------------------------- #
 
 function speed () {
+  echo "-------------------------SPEEDTEST INICIADO--------------------" > out |
   speedtest-cli >> out |
   dialog \
   --stdout \
   --title "-= Teste de Velocidade da Internet =-" \
-  --tailbox out 0 0
+  --tailbox out 60 80
 #counter=0
 #(
 # set infinite while loop
@@ -90,11 +91,11 @@ function CMDremoto() {
 form=$(dialog \
 --stdout \
 --form "Informe os dados de Conexao" \
-0 0 0 \
 "IP do Host:" 1 1 "" 1 20 20 20 \
 "Usuario do Host:" 2 1 "" 2 20 20 20 \
 "Senha:" 3 1 "" 3 20 20 20 \
-"Comando:" 4 1 "" 4 20 20 20
+"Comando:" 4 1 "" 4 20 20 20 \
+0 0 0
 )
 maquina=$($form | cut -d ' ' -f 1)
 usuario=$($form | cut -d ' ' -f 2)
