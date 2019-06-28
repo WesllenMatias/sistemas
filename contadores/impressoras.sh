@@ -32,6 +32,7 @@ printl1depo=192.168.11.147
 printdir1=192.168.11.131
 printtesou=192.168.11.149
 printvendext=192.168.11.143
+printl1rh=192.168.11.138
 printl2conf=192.168.12.18
 printl2recep=192.168.12.19
 printl2depo=192.168.12.40
@@ -41,6 +42,10 @@ printl3depo=192.168.13.137
 printl6conf=192.168.16.30
 printl6depo=192.168.16.28
 printl7conf=192.168.17.148
+printmjcx=192.168.11.137
+printmjvd=192.168.11.145
+printvdfcx=192.168.11.150
+printvdfvd=192.168.11.144
 hname=1.3.6.1.2.1.1.5
 serial=1.3.6.1.2.1.43.5.1.1.17
 contador=1.3.6.1.2.1.43.10.2.1.4
@@ -119,7 +124,31 @@ l7printconf="$( \
         echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
         echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')" \
         )"
-
+mjprintcx="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printmjcx $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printmjcx $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printmjcx $contador | awk '{ print $4 }')" \
+        )"
+mjprintvd="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printmjvd $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printmjvd $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printmjvd $contador | awk '{ print $4 }')" \
+        )"
+vdfprintcx="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printvdfcx $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printvdfcx $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printvdfcx $contador | awk '{ print $4 }')" \
+        )"
+vdfprintvd="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printvdfvd $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printvdfvd $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printvdfvd $contador | awk '{ print $4 }')" \
+        )"
+rhprintl1="$( \
+        echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1rh $hname | awk '{ print $4 }' | tr " \" " " ")" && \
+        echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1rh $serial | awk '{ print $4 }'| tr " \" " " ")" && \
+        echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1rh $contador | awk '{ print $4 }')" \
+        )"
 dialog --title "Captura de Contadores" \
        --msgbox "$(echo -e "
 ==========LOJA 01=============
@@ -150,7 +179,16 @@ $l6printconf
 $l6printdepo
 =========LOJA 07==============
 $l7printconf
+=========MJ & VDF=============
+$mjprintcx
 ==============================
+$mjprintvd
+==============================
+$vdfprintcx
+==============================
+$vdfprintvd
+==============================
+
        ")" 100 40
 }
 function contadorestelegram() {
@@ -450,6 +488,9 @@ echo -e "
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printmjcx $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printmjcx $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printmjcx $contador | awk '{ print $4 }')<br></td>" >> page.html
         echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>2 </th>">> page.html
@@ -465,32 +506,68 @@ echo -e "
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printmjvd $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printmjvd $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printmjvd $contador | awk '{ print $4 }')<br></td>" >> page.html
         echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>3 </th>">> page.html
-        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
-                                  Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")<br>
-                                  Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')<br></td>" >> page.html
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl2depo $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printl2depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl2depo $contador | awk '{ print $4 }')<br></td>" >> page.html
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl3depo $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printl3depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl3depo $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printvdfcx $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printvdfcx $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printvdfcx $contador | awk '{ print $4 }')<br></td>" >> page.html
 
         echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>4 </th>">> page.html
-        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
-                                  Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")<br>
-                                  Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> ------------- </td>" >> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printvdfvd $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printvdfvd $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printvdfvd $contador | awk '{ print $4 }')<br></td>" >> page.html
         echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>5 </th>">> page.html
-        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
-                                  Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")<br>
-                                  Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')<br></td>" >> page.html
-        echo -e "</tr>">> pagee.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "</tr>">> page.html
+        echo -e "<th scope='row'>6 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl1rh $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printl1rh $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printl1rh $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "</tr>">> page.html
+        echo -e "<th scope='row'>7 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printdir1 $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printdir1 $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printdir1 $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "</tr>">> page.html
+        echo -e "<th scope='row'>8 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printtesou $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printtesou $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printtesou $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "</tr>">> page.html
+        echo -e "<th scope='row'>9 </th>">> page.html
+        echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printvendext $hname | awk '{ print $4 }' | tr " \" " " ")<br>
+                                  Serial: $($snmp $snmpversion $parametro $opt $printvendext $serial | awk '{ print $4 }'| tr " \" " " ")<br>
+                                  Contador: $($snmp $snmpversion $parametro $opt $printvendext $contador | awk '{ print $4 }')<br></td>" >> page.html
+        echo -e "</tr>">> page.html
 echo -e "
           </tbody>
           </table>
@@ -513,7 +590,7 @@ dialog \
 --backtitle "Sistema Capturador de Contadores" \
 --inputbox "Digite e-mail de Destino:" 0 0)
 
-mailx -s "Contadores das Impressoras" "$emaildestino" <page.html
+mailx -a "Content-type: text/html;" -s "[TESTE]Contadores das Impressoras" "$emaildestino" <page.html
 }
 #-------------------MENU---------------------------
 
