@@ -303,130 +303,6 @@ function contadorestelegram() {
 ${CURL} -k -c ${COOKIE} -b ${COOKIE} -X GET "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${USER}&text=${SUBJECT}"
 
 }
-function contadoresemail() {
-
-  l1printti="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printti $hname | awk '{ print $4 }' | tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printti $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printti $contador | awk '{ print $4 }')" \
-          )"
-  l1printadm="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')" \
-          )"
-  l1printrecep="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1recep $contador | awk '{ print $4 }')" \
-          )"
-  l1printcred="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1cred $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1cred $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1cred $contador | awk '{ print $4 }')" \
-          )"
-  l1printdepo="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl1depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl1depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl1depo $contador | awk '{ print $4 }')" \
-          )"
-  l2printconf="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2conf $contador | awk '{ print $4 }')" \
-          )"
-  l2printrecep="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2recep $contador | awk '{ print $4 }')" \
-          )"
-  l2printdepo="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl2depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl2depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl2depo $contador | awk '{ print $4 }')" \
-          )"
-  l3printrecep="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3recep $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3recep $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3recep $contador | awk '{ print $4 }')\n" \
-          )"
-  l3printconf="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3conf $contador | awk '{ print $4 }')\n" \
-          )"
-  l3printdepo="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl3depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl3depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl3depo $contador | awk '{ print $4 }')\n" \
-          )"
-  l6printconf="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6conf $contador | awk '{ print $4 }')\n" \
-          )"
-  l6printdepo="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')" \
-          )"
-  l7printconf="$( \
-          echo -e "Impressora: $($snmp $snmpversion $parametro $opt $printl7conf $hname | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Serial: $($snmp $snmpversion $parametro $opt $printl7conf $serial | awk '{ print $4 }'| tr " \" " " ")" && \
-          echo -e "Contador: $($snmp $snmpversion $parametro $opt $printl7conf $contador | awk '{ print $4 }')" \
-          )"
-
-  corpoemail=$(
-
-  echo -e "
-  <html>
-    <head>
-
-    </head>
-      <body>
-  ==========LOJA 01=============
-  $l1printti
-  ==============================
-  $l1printadm
-  ==============================
-  $l1printcred
-  ==============================
-  $l1printdepo
-  ==============================
-  $l1printrecep
-  =========LOJA 02==============
-  $l2printconf
-  ==============================
-  $l2printrecep
-  ==============================
-  $l2printdepo
-  =========LOJA 03==============
-  $l3printrecep
-  ==============================
-  $l3printconf
-  ==============================
-  $l3printdepo
-  =========LOJA 06==============
-  $l6printconf
-  ==============================
-  $l6printdepo
-  =========LOJA 07==============
-  $l7printconf
-  ==============================
-        </body>
-  </html>
-
-         ")
-  emaildestino=$(
-  dialog \
-  --title "E-mail Destino" \
-  --stdout \
-  --backtitle "Sistema Capturador de Contadores" \
-  --inputbox "Digite e-mail de Destino:" 0 0)
-
-  echo -e $corpoemail | mailx -s "Contadores das Impressoras" "$emaildestino"
-
-}
 function contadoresemailbootstrap() {
 
 touch page.html
@@ -601,7 +477,6 @@ while true;
         1 "Capturar Contadores Mostrar em Tela"       \
         2 "Capturar Contadores Enviar Telegram"       \
         3 "Capturar Contadores Enviar via E-mail"     \
-        4 "Capturar Contadores Enviar via E-mail Bootstrap" \
         0 "Sair"                                )
 
         #[ $? -ne 0 ] && "Cancelou ou Apertou ESC." && break
@@ -609,8 +484,7 @@ while true;
           case "$menu" in
                   1) printname;;
                   2) contadorestelegram;;
-                  3) contadoresemail;;
-                  4) contadoresemailbootstrap;;
+                  3) contadoresemailbootstrap;;
                   0) exit;;
           esac
   done
