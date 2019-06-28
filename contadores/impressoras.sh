@@ -465,7 +465,7 @@ echo -e "
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printl6depo $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printl6depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl6depo $contador | awk '{ print $4 }')<br></td>" >> page.html
-        echo -e "</tr>">> pagee.html
+        echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>3 </th>">> page.html
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
@@ -478,13 +478,13 @@ echo -e "
                                   Serial: $($snmp $snmpversion $parametro $opt $printl3depo $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printl3depo $contador | awk '{ print $4 }')<br></td>" >> page.html
 
-        echo -e "</tr>">> pagee.html
+        echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>4 </th>">> page.html
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
                                   Serial: $($snmp $snmpversion $parametro $opt $printadm $serial | awk '{ print $4 }'| tr " \" " " ")<br>
                                   Contador: $($snmp $snmpversion $parametro $opt $printadm $contador | awk '{ print $4 }')<br></td>" >> page.html
-        echo -e "</tr>">> pagee.html
+        echo -e "</tr>">> page.html
         echo -e "<tr>">> page.html
         echo -e "<th scope='row'>5 </th>">> page.html
         echo -e "<td scope='col'> Impressora: $($snmp $snmpversion $parametro $opt $printadm $hname | awk '{ print $4 }' | tr " \" " " ")<br>
