@@ -506,7 +506,14 @@ echo -e "
   </body>
 </html>" >> page.html
 
+emaildestino=$(
+dialog \
+--title "E-mail Destino" \
+--stdout \
+--backtitle "Sistema Capturador de Contadores" \
+--inputbox "Digite e-mail de Destino:" 0 0)
 
+mailx -s "Contadores das Impressoras" "$emaildestino" <page.html
 }
 #-------------------MENU---------------------------
 
