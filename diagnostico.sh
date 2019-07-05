@@ -90,17 +90,19 @@ function NmapScan() {
 function CMDremoto() {
 form=$(dialog \
 --stdout \
+--backtitle "Ferramenta de Diagnosticos" \
+--title "Comando Remoto" \
 --form "Informe os dados de Conexao" \
-"IP do Host:" 1 1 "" 1 20 20 20 \
-"Usuario do Host:" 2 1 "" 2 20 20 20 \
-"Senha:" 3 1 "" 3 20 20 20 \
-"Comando:" 4 1 "" 4 20 20 20 \
-0 0 0
+150 50 0 \
+"IP do Host:"       1 1 "$maquina" 1 20 20 20 \
+"Usuario do Host:"  2 1 "$usuario" 2 20 20 20 \
+"Senha:"            3 1 "$pwd" 3 20 20 20 \
+"Comando:"          4 1 "$comando" 4 20 20 20 \
 )
 maquina=$($form | cut -d ' ' -f 1)
 usuario=$($form | cut -d ' ' -f 2)
 pwd=$($form | cut -d ' ' -f 3)
-comando=($form | cut -d ' ' -f 4)
+comando=$($form | cut -d ' ' -f 4)
 #  maquina=$(dialog \
 #  --title "-=HOST=-" \
 #  --stdout \
@@ -121,7 +123,7 @@ cmdext=$(sshpass -p $pwd $conexao $usuario@$maquina "$comando")
 dialog \
 --title "Retorno do Comando" \
 --stdout \
---msgbox "$cmdext" 0 0 \
+--msgbox "$cmdext" 0 0 
 }
 function atualizar() {
   origem=$(dialog \
@@ -140,17 +142,22 @@ function atualizar() {
 }
 function temperatura() {
   rasp1=192.168.11.90
-  pwd=valessh
+  rasp2=192.168.11.91
+  pwdrasp1=$(echo "valessh")
+  pwdrasp2=$(echo 'grupo$vale')
   temp='vcgencmd measure_temp'
   volt='vcgencmd measure_volts'
   usuario=pi
   ssh=/usr/bin/ssh
-  cmdrasp=$(sshpass -p $pwd $ssh $usuario@$rasp1 $temp)
+  cmdrasp1=$(sshpass -p $pwdrasp1 $ssh $usuario@$rasp1 $temp)
+  cmdrasp2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $temp)
   dialog \
   --title "-=Temperatura das Rapsberrys=-" \
   --stdout \
-  --msgbox "$(echo "Temperaturas:
-  $cmdrasp")" 0 0
+  --msgbox "$( \
+  echo "Temperatura: $cmdrasp1" \
+       "Temperatura: $cmdrasp2" \
+  )" 0 0
 }
 
 #-------------------------- MENU ------------------------------------------------------ #
