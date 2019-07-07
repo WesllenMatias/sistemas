@@ -28,7 +28,6 @@
 
 
 #-------------------------- FUNCOES ----------------------------------------- #
-
 function speed () {
   echo "-------------------------SPEEDTEST INICIADO--------------------" > out |
   speedtest-cli >> out |
@@ -123,7 +122,7 @@ cmdext=$(sshpass -p $pwd $conexao $usuario@$maquina "$comando")
 dialog \
 --title "Retorno do Comando" \
 --stdout \
---msgbox "$cmdext" 0 0 
+--msgbox "$cmdext" 0 0
 }
 function atualizar() {
   origem=$(dialog \
@@ -159,6 +158,37 @@ function temperatura() {
        "Temperatura: $cmdrasp2" \
   )" 0 0
 }
+function menurasp() {
+    submenu=$(dialog \
+    --backtitle "Raspberrys" \
+    --title "Menu Raspberrys" \
+    --stdout \
+    --menu "Escolha uma opção:" 0 0 0 \
+    1 "Cadastrar Rapsberrys" \
+    2 "Listar Cadastros"     \
+    3 "Editar Cadastro"      \
+    4 "Remover Cadastro"     \
+    0 "Voltar" )
+    case $submenu in
+      1) cadrasp;;
+
+    esac
+}
+function cadrasp() {
+  #Tela de Cadastro Rapsberrys
+  dialog \
+  --title "Cadastrar" \
+  --backtitle "Cadastro de Raspberrys" \
+  --form "Formulário de Cadastro" \
+  0 0 0 \
+  "Nome da Raspberry:"       1 1 "$hostnamerasp" 1 20 20 20 \
+  "IP da Raspberry:"         2 1 "$iprasp" 2 20 20 20 \
+  "Usuário da Rasp:"         3 1 "$userrasp" 3 20 20 20 \
+  "Senha "                   4 1 "$pwdrasp" 4 20 20 20 \
+  "Local da Rapsberry"       5 1 "$localrasp" 5 20 20 20
+
+
+}
 
 #-------------------------- MENU ------------------------------------------------------ #
 while true;
@@ -170,7 +200,8 @@ while true;
         4 "Scanner Nmap"                        \
         5 "Comando Remoto"                      \
         6 "Atualizar"                           \
-        7 "Temperatura das Raspberrys"          \
+        7 "Menu Raspberrys"          \
+        8 "Temperatura das Raspberrys" \
         0 "Sair"                                )
 
         [ $? -ne 0 ] && "Cancelou ou Apertou ESC." && break
@@ -182,7 +213,8 @@ while true;
                   4) NmapScan;;
                   5) CMDremoto;;
                   6) atualizar;;
-                  7) temperatura;;
+                  7) menurasp;;
+                  8) temperatura;;
                   0) exit;;
           esac
 done
