@@ -83,7 +83,7 @@ function NmapScan() {
   --inputbox " Digite a faixa de IP. Ex: 10.0.1.0/24 " 0 0)
   nresultado=$(nmap -sn ${faixaip})
   dialog \
-  --title " Resultado do Ping: " \
+  --title " Resultado do Scanner: " \
   --msgbox "$nresultado" 0 0
 }
 function CMDremoto() {
@@ -142,20 +142,33 @@ function atualizar() {
 function temperatura() {
   rasp1=192.168.11.90
   rasp2=192.168.11.91
+  tvlj708=192.168.17.170
+  name='hostname'
   pwdrasp1=$(echo "valessh")
   pwdrasp2=$(echo 'grupo$vale')
   temp='vcgencmd measure_temp'
   volt='vcgencmd measure_volts'
   usuario=pi
   ssh=/usr/bin/ssh
+  cmdhost1=$(sshpass -p $pwdrasp1 $ssh $usuario@$rasp1 $name)
   cmdrasp1=$(sshpass -p $pwdrasp1 $ssh $usuario@$rasp1 $temp)
+  cmdvolt1=$(sshpass -p $pwdrasp1 $ssh $usuario@$rasp1 $volt)
+  cmdhost2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $name)
   cmdrasp2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $temp)
+  cmdvolt2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $volt)
+  cmdhost=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $name)
+  cmd1lj7vd8=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $temp)
+  cmd2lj7vd8=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $volt)
   dialog \
   --title "-=Temperatura das Rapsberrys=-" \
   --stdout \
   --msgbox "$( \
-  echo "Temperatura: $cmdrasp1" \
-       "Temperatura: $cmdrasp2" \
+  echo "$cmdhost1: $cmdrasp1" \
+       "$cmdhost1: $cmdvolt1" \
+       "$cmdhost2: $cmdrasp2" \
+       "$cmdhost2: $cmdvolt2" \
+       "$cmdhost: $cmd1lj7vd8" \
+       "$cmdhost: $cmd2lj7vd8"
   )" 0 0
 }
 function menurasp() {
