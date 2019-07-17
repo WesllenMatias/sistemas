@@ -184,6 +184,7 @@ function menurasp() {
     0 "Voltar" )
     case $submenu in
       1) cadrasp;;
+      2) listrasp;;
 
     esac
 }
@@ -198,9 +199,15 @@ function cadrasp() {
   "IP da Raspberry:"         2 1 "$iprasp" 2 20 20 20 \
   "Usuário da Rasp:"         3 1 "$userrasp" 3 20 20 20 \
   "Senha "                   4 1 "$pwdrasp" 4 20 20 20 \
-  "Local da Rapsberry"       5 1 "$localrasp" 5 20 20 20
-
-
+  "Local da Rapsberry"       5 1 "$localrasp" 5 20 20 20 \
+  | \  
+  mysql -u wesllen -p2qybcjqw -e "INSERT INTO raspberrys ( nome, ip, usuario, senha, local ) values ( '$hostnamerasp', '$iprasp', '$userrasp', '$pwdrasp', '$localrasp' )" diag_db
+}
+function listrasp() {
+  dialog \
+  --backtitle "Menu Raspberrys" \
+  --title "Listagem Cadastrada" \
+  --msgbox "$(sudo mysql -e "select * from raspberrys" diag_db)" 0 0
 }
 
 #-------------------------- MENU ------------------------------------------------------ #
