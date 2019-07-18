@@ -5,7 +5,11 @@ CREATE TABLE IF NOT EXISTS `diag_db`.`raspberrys` (
   `idraspberrys` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   `ip` VARCHAR(15) NOT NULL,
+=======
+  `ip` VARCHAR(16) NOT NULL,
+>>>>>>> Stashed changes
 =======
   `ip` VARCHAR(16) NOT NULL,
 >>>>>>> Stashed changes
