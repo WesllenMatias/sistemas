@@ -35,30 +35,6 @@ function speed () {
   --stdout \
   --title "-= Teste de Velocidade da Internet =-" \
   --tailbox out 60 80
-#counter=0
-#(
-# set infinite while loop
-#while :
-#do
-#speedtest=$(speedtest-cli > speed.txt)
-#cat <<EOF
-#XXX
-#$counter
-#$speedtest ( $counter%):
-#XXX
-#OF
-# increase counter by 10
-#(( counter+=10 ))
-#[ $counter -eq 100 ] && break
-# delay it a specified amount of time i.e 1 sec
-#sleep 1
-#done
-#) |
-#dialog --title "Testando Velocidade" --gauge "Aguarde..." 7 70 0 && \
-#dialog \
-#  --stdout \
-#  --title "-= Teste de Velocidade da Interne =-" \
-#  --msgbox "$(cat speed.txt)" 0 0
 }
 function TamDisco() {
   disco=$(df -h | head -n 1 && df -h | grep sd)
@@ -142,7 +118,15 @@ function atualizar() {
 function temperatura() {
   rasp1=192.168.11.90
   rasp2=192.168.11.91
-  tvlj708=192.168.17.170
+  vds00=192.168.17.100
+  vds01=192.168.17.101
+  vds02=192.168.17.102
+  vds03=192.168.17.103
+  vds04=192.168.17.104
+  vds05=192.168.17.105
+  vds06=192.168.17.106
+  vds09=192.168.17.109
+  vds10=192.168.17.110
   name='hostname'
   pwdrasp1=$(echo "valessh")
   pwdrasp2=$(echo 'grupo$vale')
@@ -156,20 +140,20 @@ function temperatura() {
   cmdhost2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $name)
   cmdrasp2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $temp)
   cmdvolt2=$(sshpass -p $pwdrasp2 $ssh $usuario@$rasp2 $volt)
-  cmdhost=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $name)
-  cmd1lj7vd8=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $temp)
-  cmd2lj7vd8=$(sshpass -p $pwdrasp1 $ssh $usuario@$tvlj708 $volt)
-  dialog \
+  cmdhost0=$(sshpass -p $pwdrasp1 $ssh $usuario@$vds00 $name)
+  cmdtem0=$(sshpass -p $pwdrasp1 $ssh $usuario@$vds00 $temp)
+  cmdvolt0=$(sshpass -p $pwdrasp1 $ssh $usuario@$vds00 $volt)
+  dia100log \
   --title "-=Temperatura das Rapsberrys=-" \
   --stdout \
   --msgbox "$( \
-  echo "$cmdhost1: $cmdrasp1" \
-       "$cmdhost1: $cmdvolt1" \
-       "$cmdhost2: $cmdrasp2" \
-       "$cmdhost2: $cmdvolt2" \
-       "$cmdhost: $cmd1lj7vd8" \
-       "$cmdhost: $cmd2lj7vd8"
-  )" 0 0
+  echo "\n $cmdhost1: $cmdrasp1 \n" \
+       "$cmdhost1: $cmdvolt1 \n" \
+       "$cmdhost2: $cmdrasp2 \n" \
+       "$cmdhost2: $cmdvolt2 \n" \
+       "$cmdhost0: $cmdtem0 \n" \
+       "$cmdhost0: $cmdvolt0 \n" \
+  )" 150 50
 }
 function menurasp() {
     submenu=$(dialog \
@@ -189,25 +173,32 @@ function menurasp() {
     esac
 }
 function cadrasp() {
-  #Tela de Cadastro Rapsberrys
-  dialog \
-  --title "Cadastrar" \
+  cadastro=$( dialog \
+  --stdout \
   --backtitle "Cadastro de Raspberrys" \
+  --title "Cadastrar" \
   --form "Formulário de Cadastro" \
-  0 0 0 \
-  "Nome da Raspberry:"       1 1 "$hostnamerasp" 1 20 20 20 \
-  "IP da Raspberry:"         2 1 "$iprasp" 2 20 20 20 \
-  "Usuário da Rasp:"         3 1 "$userrasp" 3 20 20 20 \
-  "Senha "                   4 1 "$pwdrasp" 4 20 20 20 \
-  "Local da Rapsberry"       5 1 "$localrasp" 5 20 20 20 \
-  | \  
-  mysql -u wesllen -p2qybcjqw -e "INSERT INTO raspberrys ( nome, ip, usuario, senha, local ) values ( '$hostnamerasp', '$iprasp', '$userrasp', '$pwdrasp', '$localrasp' )" diag_db
+  150 50 0 \
+  "Nome da Raspberry:"     1 1 "$name" 1 20 20 20 \
+  "IP da Raspberry:"       2 1 "$iprasp" 2 20 20 20 \
+  "Usuário da Rasp:"       3 1 "$userrasp" 3 20 20 20 \
+  "Senha:"                 4 1 "$pwdrasp" 4 20 20 20 \
+  "Local da Rapsberry:"    5 1 "$localrasp" 5 20 20 20 \
+  )
+
+  name=$( echo $cadastro | cut -d ' ' -f1)
+  iprasp=$( echo $cadastro | cut -d ' ' -f2)
+  userrasp=$( echo $cadastro | cut -d ' ' -f3)
+  pwdrasp=$( echo $cadastro | cut -d ' ' -f4)
+  localrasp=$( echo $cadastro | cut -d ' ' -f5)
+
+  mysql -u wesllen -p2qybcjqw -h 192.168.11.10 -e "INSERT INTO raspberrys ( nome, ip, usuario, senha, local ) VALUES ( '$name', '$iprasp', '$userrasp', '$pwdrasp', '$localrasp' )" diag_db
 }
 function listrasp() {
   dialog \
   --backtitle "Menu Raspberrys" \
   --title "Listagem Cadastrada" \
-  --msgbox "$(sudo mysql -e "select * from raspberrys" diag_db)" 0 0
+  --msgbox "$(mysql -u wesllen -p2qybcjqw -h 192.168.11.10 -e "select * from raspberrys" diag_db)" 50 100
 }
 
 #-------------------------- MENU ------------------------------------------------------ #
